@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    {% include 'newPassword/head.html.twig' %}
+    <body id="page-top">
+        <!-- Page Wrapper -->
+            <div id="wrapper">
+
+                    {% include 'newPassword/sidebar.html.twig' %}
+                    <!-- Main Content -->
+                    <div id="content">
+                        
+                    {% include 'newPassword/navigation.html.twig' %}
+
+                        <!-- Begin Page Content -->
+                        <div class="container mt-5">
+                            <div class='row col-xl-12 d-flex flex-column align-items-center justify-content-center'> 
+                                
+                                <div class="entete_password">
+                                    <h5 class="mb-4 text-black mt-auto">Veuillez saisir votre nouveau Mot de passe.</h5>
+                                </div>
+                                
+                                <div class="text-center row col-xl-12 alert alert-success"  style="display: none;" id="mypassword" role="alert"><div>
+
+                                <form id="password_new_form">
+                                    <div class="row col-sm form-group champ-password">
+                                        <input type="password" class="form-control password-input" placeholder="Mot de passe" id='new_password' value="">
+                                    </div>
+                                    <div class="row col-sm justify-content-center">
+                                        <button type="submit" class='bouton-password btn_submit' id="new_pass_submit"><i class="fas fa-arrow-right"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+    </body>
+</html>

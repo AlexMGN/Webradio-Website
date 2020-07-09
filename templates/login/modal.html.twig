@@ -23,14 +23,12 @@
                             <div class="form-group champ">
                                 <button  id="login" type="submit" class="form-control border-0 font-weight-bold text-white btn_submit" style="background-color:#EF0051;">Connexion</button>
                             </div>
-
-                                <div class="fb-login-button" data-width="280" data-size="medium" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false">
-                                </div>
+                            <div class="fb-login-button" data-size="medium" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width="280" onlogin="checkLoginState();"></div>
                         </form>
                         <div class="modal-footer">
                             <ul class="pl-0 d-flex flex-column w-100">
                                 <li class=" d-lg-inline text-gray-600 small text-center" style="display: inline-block">Pas encore inscrit ? <a class="text-pink" href="#registerModal" data-toggle="modal" data-dismiss="modal">Inscrivez-vous</a></li>
-                                <li class=" d-lg-inline text-gray-600 small text-center" style="display: inline-block">Mot de passe oublié ? <a class="text-pink" href="#forgetPassword" data-toggle="modal" data-dismiss="modal">C’est ici</a></li>
+                                <li class=" d-lg-inline text-gray-600 small text-center" style="display: inline-block">Mot de passe oublié ? <a class="text-pink" href="{{ path('passwordLost.index') }}">C’est ici</a></li>
                             </ul>
                         </div>          
                 </div>
@@ -39,3 +37,36 @@
         </div>
     </div>
 </div>
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '615005845981760',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v7.0'
+    });
+      
+    FB.AppEvents.logPageView();   
+
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+   
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+</script>
+{% endblock %}

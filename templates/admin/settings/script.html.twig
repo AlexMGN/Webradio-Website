@@ -53,16 +53,14 @@ String.prototype.rtrim = function() {
 
     let store = true;
     
-    const token      =  localStorage.getItem("token");
-    let username     =  localStorage.getItem("username");
-    let userPassword =  localStorage.getItem("password");
-    let userId       =  localStorage.getItem("userId");
-    let email        =  localStorage.getItem("email");
+    const token      =  localStorage.token;
+    var userId       =  localStorage.userId;
+
 
    
-    $('#username').attr('value', username);
-    $('#password').attr('value', userPassword);
-    $('#email').attr('value', email);
+    $('#username').attr('value', localStorage.username);
+    $('#password').attr('value', localStorage.password);
+    $('#email').attr('value', localStorage.email);
 
 
         $('#button-settingsAdmin').click(function(e) {
@@ -78,7 +76,7 @@ String.prototype.rtrim = function() {
 
             let profil = $('#profil').attr('src');
 
-           if(token !== "" || createUser !== undefined ||  profil !== undefined)
+           if(localStorage.token != null && createUser !== undefined && profil !== undefined)
            {
 
            $.ajax({
@@ -110,7 +108,7 @@ String.prototype.rtrim = function() {
         });
 
 
-        if(token !== ""){
+        if(localStorage.token != null){
             //update password
             $("#savePassword").click((e) => {
                 e.preventDefault(); 

@@ -128,10 +128,10 @@ $.fn.pageMe = function(opts){
 
 $(document).ready(function() {
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.token;
     let idUser;
 
-    if(token !== ""){ 
+    if(token != null){ 
 
         //recherche
         $("#myInput").on("keyup", function() {
@@ -175,7 +175,7 @@ $(document).ready(function() {
 
                         let myId = $(this).attr("id");
 
-                       localStorage.setItem("idForUser", myId);
+                       localStorage.idForUser = myId;
 
                         console.log(myId);
 
@@ -200,20 +200,21 @@ $(document).ready(function() {
         /*
         *Suppression d'utilisateur
         */
-        $('#deleteUser').on("click", function(){
+        $('#deleteUser').on("click", function(e){
+             e.preventDefault();
 
-            let user_id = localStorage.getItem("deleteUserId");
+            let userdelId = localStorage.getItem("deleteUserId");
 
               $.ajax({
                 type: "DELETE", 
-                url: "https://webradio-stream.herokuapp.com/authorized/users/delete/"+user_id, 
+                url: "https://webradio-stream.herokuapp.com/authorized/users/delete/"+userdelId, 
                 headers: {
                     'Authorization':'Bearer ' + token
                 }
             }).done((response)=>{
 
                 localStorage.removeItem("deleteUserId");
-                console.log(response.message);
+                console.log(response);
 
             }).fail((error)=>{
 

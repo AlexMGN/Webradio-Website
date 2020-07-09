@@ -1,0 +1,65 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+<script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<script>
+$(document).ready(function() {
+
+      String.prototype.rtrim = function() {
+    return this.replace(/\s+$/, "");
+    }
+
+    function inputPassword(inputData, input){
+    let passwordData = inputData;
+    passwordInput = input;
+
+        if(passwordData.length < 8){
+            passwordInput.after('<div class="erreur text-dark small-2" style="font-size: xx-small;">Merci de rentrer un mot de passe de 8 caractères minimum</div>');
+            
+        }else  {
+            return passwordData;
+        }
+    } // password verify
+
+    $('#password_new_form').on('click', (e) =>{
+        e.preventDefault(); 
+        disable();
+
+        let newPass = $('#new_password').val();
+        let inputPass = $('#new_password');
+
+        let newPassword = inputEmail(newPass, inputPass);
+
+        console.log(newPassword);
+
+        if(newPassword != undefined) {
+
+             $.ajax({
+            type: "POST",
+            url:"",
+            data: {
+                password: newPassword,
+            }
+            }).done(function (response){
+
+                if(response != undefined) {
+                   $('#mypassword').css('display', 'block');
+                }
+                console.log(response);
+
+            }).fail((err) =>{
+
+                /*$('#passwordLost-danger').css("display", "block");
+                
+                $('#passwordLost-danger').html(err);*/
+
+                console.log(err);
+            });
+        }
+
+    });
+});
+</script>

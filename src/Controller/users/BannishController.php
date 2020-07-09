@@ -4,6 +4,7 @@ namespace App\Controller\users;
 
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BannishController extends BaseController {
 
     /**
-    * @Route("/{username}", name="banni.index", methods={"GET"})
+    * @Route("/", name="banni.index", methods={"GET"})
     */
     public function index() :Response
     {

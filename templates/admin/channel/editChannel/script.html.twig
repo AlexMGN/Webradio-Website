@@ -55,11 +55,11 @@ $(document).ready(function() {
     let downloadUrl;
 
     
-    const token = localStorage.getItem("token");
-    let idChannel = localStorage.getItem("userChannelId");
+    const token = localStorage.token;
+    var idChannel = localStorage.userChannelId;
 
 
-    if(token !== "" || idChannel !=="") {
+    if(localStorage.token != null && localStorage.userChannelId != null) {
 
         /*
         * affiche une chaine 
@@ -208,7 +208,6 @@ $(document).ready(function() {
             
                 // On remplace l'URL de l'image par la nouvelle
                     $('#profil').attr('src', downloadUrl);
-                    $('#logo-setting').attr('src', downloadUrl) 
 
             });
         });// change profil 
@@ -225,7 +224,7 @@ $(document).ready(function() {
 
                 let channelName = inputUsername(channels,inputChannel);
 
-             if(token !== "" || channelName !== undefined || idChannel !==""){
+             if(localStorage.token != null && localStorage.userChannelId != null && channelName !== undefined){
                         
                  
                 $.ajax({

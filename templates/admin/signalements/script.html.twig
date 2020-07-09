@@ -127,7 +127,7 @@ $.fn.pageMe = function(opts){
 
 $(document).ready(function() {
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.token;
 
         const reset = () => {
         $(".btn_submit").attr("disabled", false);
@@ -152,7 +152,16 @@ String.prototype.rtrim = function() {
             
         }
     }
-    if(token !== ""){
+    if(localStorage.token != null){
+
+        //recherche
+        $("#myInput").on("keyup", function() {
+            let value = $(this).val().toLowerCase();
+
+            $("#signal-corps tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
 
         $.ajax({
             type: "GET",
@@ -161,24 +170,24 @@ String.prototype.rtrim = function() {
                 'Authorization':'Bearer ' + token
             },
             dataType: "json",
-        }).done((response) =>{
+        }).done( (response) =>{
+                console.log(response);
+             if (response != undefined) {
 
-            if(response != undefined) {
 
-                 let mytab;
-            
+                let mytab;
 
-                    //for(let i=0; i<response.signalements.length; i++){
+                    for(let i=0; i<response.signalements.length; i++){  
 
-                       mytab +='<tr><td >'+response.signalements[0].channel_id+'</td><td >'+response.signalements[0].channel_name
+                       mytab +='<tr><td >'+response.signalements[i].channel_id+'</td><td >'+response.signalements[i].channel_name
                         +'</td><td ><a href="#" class="" id="'
-                        +response.signalements[0].channel_id+'">'
-                        +response.signalements[0].nombre_signalements+'</a></td><td><a href="#" data-toggle="modal" data-dismiss="modal" id="'
-                        +response.signalements[0].channel_id+'" class="far fa-trash-alt fa-2x"></a><a href="#myedit" data-toggle="modal" data-dismiss="modal" class="fa-2x far fa-edit" id="'
-                        +response.signalements[0].channel_id+'"></a></td></tr>';
+                        +response.signalements[i].channel_id+'">'
+                        +response.signalements[i].nombre_signalements+'</a></td><td><a href="#bannirModal" data-toggle="modal" data-dismiss="modal" id="'
+                        +response.signalements[i].channel_id+'" class="far fa-trash-alt fa-2x"></a><a href="#myedit" data-toggle="modal" data-dismiss="modal" class="fa-2x far fa-edit" id="'
+                        +response.signalements[i].channel_id+'"></a></td></tr>';
                         
                        
-                    //}
+                    }
                     
                     $("#signal-corps").append(mytab);  //const id = $(this).data("id")
                     $("#signal-corps").pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:4});                    
@@ -187,77 +196,93 @@ String.prototype.rtrim = function() {
 
                         let signalId = $(this).attr("id");
 
-                       //localStorage.setItem("signalId", signalId);
-                       $('#editSignal').modal("show");
+                        //localStorage.setItem("signalId", signalId);
+                        $('#editSignal').modal("show");
 
-                       $('#update_channel_signalements_id').attr('value', signalId);
+                        $('#update_channel_signalements_id').attr('value', signalId);
 
-                       $('#update_channel_signalements_form').on("click", function(e){
+                        $('#update_channel_signalements_form').on("click", function(e){
 
                            e.preventDefault(); 
                             disable();
                            const signalement_id = $("#update_channel_signalements_id").val();
 
                             let usernameShow = $('#format-update').val();
-                                let inpUser = $('#format-update');
-                                let createUser = inputUsername(usernameShow,inpUser);
+                            let inpUser = $('#format-update');
+                            let createUser = inputUsername(usernameShow,inpUser);
                                 
                             let data = {
                                 motif: createUser
                             };
-                          if (createUser !== undefined) {
 
-                         $.ajax({
-                               type: "PUT",
-                               url: 'https://webradio-stream.herokuapp.com/authorized/signalement/update/'+signalement_id,
-                               data: data,
-                               headers: {
-                                    'Authorization':'Bearer ' + token
-                                },
-                           }).done( (data) =>{
+                            if (createUser !== undefined) {
 
-                                console.log(data);
+                                $.ajax({
+                                type: "PUT",
+                                url: 'https://webradio-stream.herokuapp.com/authorized/signalement/update/'+signalId,
+                                data: data,
+                                headers: {
+                                        'Authorization':'Bearer ' + token
+                                    },
+                                }).done( (data) =>{
 
-                           }).fail( (err) =>{
+                                        console.log(data);
 
-                               console.log(err);
-                           });
+                                }).fail( (err) =>{
 
-                       });// end update
+                                    console.log(err);
+                                });
 
-                        console.log(signalId);
-
-                    });// modify signal
+                            } // verify createUser
 
 
-                $('.fa-trash-alt').on("click", function(){ // TODO supprression
-                     
-                    let signalId = $(this).attr("id");
+                        }); //update_channel_signalements_form
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: 'https://webradio-stream.herokuapp.com/authorized/signalement/update/'+signalId,
-                        headers: {
-                            'Authorization':'Bearer ' + token
-                        },
-                    }).done( (data) =>{
+                    }); // modifier
 
-                        console.log(data);
+                    $('.fa-trash-alt').on("click", function(){
 
-                    }).fail( (err) =>{
+                        var signalId = $(this).attr("id");
 
-                        console.log(err);
-                    })
+                        localStorage.signalId = signalId;
+                        
+                        console.log (signalId);
 
-                });// delete
+                    }); // suppression
 
-            }
-            console.log(response);
+             }// end if of all signal 
 
-        }).fail((error) =>{
-
-            console.log(error);
+        }).fail( (err) => {
+            console.log(err);
         });
+
+        $('#deleteSignal').on("click", function(){
+
+            var signalId = localStorage.signalId;
+
+            $.ajax({
+            type: "DELETE",
+            url: 'https://webradio-stream.herokuapp.com/authorized/signalement/update/'+signalId,
+            headers: {
+                'Authorization':'Bearer ' + token
+            },
+            }).done( (data) =>{
+
+                
+                localStorage.removeItem("signalId");
+
+                $('#messageSucces').html(response.message);
+                $('#messageSucces').html("Ok Signal");
+                $('#messageSucces').css("display","block");
+                //console.log(data);
+
+            }).fail( (err) =>{
+
+                console.log(err);
+            });
+
+        });
+            
     } // end if
 
 });

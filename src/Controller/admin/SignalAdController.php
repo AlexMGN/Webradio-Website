@@ -10,7 +10,7 @@ use Unirest;
 
 
 /**
-* @Route("/admin/signal")
+* @Route("/admin/signalement")
 */
 class SignalAdController extends BaseController 
 {

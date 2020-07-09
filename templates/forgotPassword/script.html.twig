@@ -1,0 +1,91 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+<script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<script>
+$(document).ready(function() {
+
+    String.prototype.rtrim = function() {
+    return this.replace(/\s+$/, "");
+    }
+
+    function inputEmail(inputData, input){
+        let emailData = inputData.rtrim();
+
+        emailInput = input;
+        if(emailData.length < 1) {
+            emailInput.after('<div class="erreur text-dark small" style="font-size: xx-small;">Ce champ est obligatoire</div>');
+        }else{
+            let regEx = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]{0,63}@(?:[a-zA-Z0-9-]{1,63}\.){1,125}[a-zA-Z]{2,63}$/;
+            let validEmail = regEx.test(emailData);
+
+            if(!validEmail)
+            {
+                emailInput.after('<span class="erreur text-dark small" style="font-size: xx-small;">Merci de rentrer une adresse email valide</span>');
+            }
+            else{
+                return emailData;
+            }
+        }
+
+    }//  email verify
+
+    const reset = () => {
+        $(".btn_submit").attr("disabled", false);
+        $(".btn_submit").css("background-color", "#EF0051");
+        $(".btn_submit").hover(() => { $(".btn_submit").css("background-color", "#D31052") })
+    };
+
+    const disable = () => {
+        $(".btn_submit").attr("disabled", true);
+        $(".btn_submit").css("background-color", "gray");
+    }
+    
+      $('#forgot_pass_submit').on('click', (e) =>{
+        e.preventDefault(); 
+        disable();
+
+        let emailForgotPass = $('#forgot_email').val();
+        let inputPass = $('#forgot_email');
+
+        let forgotPassword = inputEmail(emailForgotPass, inputPass);
+
+        console.log(forgotPassword);
+
+        if(forgotPassword != undefined) {
+
+             $.ajax({
+            type: "POST",
+            url:"https://webradio-stream.herokuapp.com/auth/forgot/password",
+            data: {
+                email: forgotPassword,
+            }
+            }).done(function (response){
+                reset();
+                if(response != undefined) {
+
+                    $('#passwordLost-success').css("display", "block");
+            
+                    $('#passwordLost-success').html(response.message);
+                    
+                }
+                console.log(response);
+
+            }).fail((err) =>{
+                reset();
+                $('#passwordLost-danger').css("display", "block");
+                
+                $('#passwordLost-danger').html(err);
+
+                console.log(err);
+            });
+        }else{
+            console.log("donnee non envoyer");
+        }
+
+    });//fin
+});
+</script>

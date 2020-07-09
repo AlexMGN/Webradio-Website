@@ -27,15 +27,14 @@
                     <button id="inscription" type="submit" class="form-control border-0 font-weight-bold text-white btn_submit" style="background-color:#EF0051;">Inscription</button>
                 </div>
 
-                <div class="fb-login-button" data-width="280" data-size="medium" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false">
-                </div>
+                <div class="fb-login-button" data-size="medium" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width="280" onlogin="checkLoginState();"></div>
              </form>
 
             <div class="modal-footer">
                 <div class="pl-0 d-flex flex-column w-100">
                     <li class="text-gray-600 small text-center" style="display: inline-block">Déjà un compte ? <a class="text-pink" href="#loginModal" data-toggle="modal" data-dismiss="modal">Connectez
                     -vous</a></li>
-                    <li class="text-gray-600 small text-center" style="display: inline-block">Mot de passe oublié ? <a class="text-pink" href="#" data-toggle="modal" data-dismiss="modal">C’est ici</a></li>
+                    <li class="text-gray-600 small text-center" style="display: inline-block">Mot de passe oublié ? <a class="text-pink" href="{{ path('passwordLost.index') }}">C’est ici</a></li>
                 </div>
             </div>
         </div>

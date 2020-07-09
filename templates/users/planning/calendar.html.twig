@@ -4,24 +4,27 @@
                             <a href="{{path('profile.library.index')}}" class="btn couleur-principal"> Bibliothèque de musiques</a>
                         </span>
 
-                        <h1 class="text-black">{{ monthName }} {{ year }}</h1>
+                        <h3 class="text-black" id="monthAndYear"></h3>
 
-                        <span>
-                            <a href="{#{ path() }#}" class="btn couleur-btn">Précedent</a>
-                            <a href=" {#{ path() }#}" class="btn">Aujourd'hui</a>
-                            <a href="{{ path('profile.planning.nextMonth') }}" class="btn couleur-btn">Suivant</a>
+                        <span class="button-container-calendar">
+                            <button class="btn couleur-btn" id="previous">Précedent</button>
+                            <button class="btn" id='today'>Aujourd'hui</button>
+                            <button id="next" class="btn couleur-btn">Suivant</button>
                         </span>
                     </div>
                 </div>
                 <div class="row container mt-3 p-0">
                     <div class="col-md-12 p-0 w-100">
                         <div class="card shadow mb-4 w-100">
+
                             <!-- Card Body -->
                             <div class="card-body calendar w-100 p-0">
                                 <div class="table-responsive">
-                                    {{ calendar|raw }}
+                                    <div id="caleandar" class="w-100"></div>
+                                    <a href='/user/planning/timeline' id='addEvent' class='calendar__button'>+</a>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>  
                 </div>

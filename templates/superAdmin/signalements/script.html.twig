@@ -128,7 +128,7 @@ $.fn.pageMe = function(opts){
 
 $(document).ready(function() {
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.token;
 
         const reset = () => {
         $(".btn_submit").attr("disabled", false);
@@ -153,7 +153,16 @@ String.prototype.rtrim = function() {
             
         }
     }
-    if(token !== ""){
+    if(token != null){
+
+        //recherche
+        $("#myInput").on("keyup", function() {
+            let value = $(this).val().toLowerCase();
+
+            $("#signal-corps tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
 
         $.ajax({
             type: "GET",
@@ -174,7 +183,7 @@ String.prototype.rtrim = function() {
                        mytab +='<tr><td >'+response.signalements[0].channel_id+'</td><td >'+response.signalements[0].channel_name
                         +'</td><td ><a href="#" class="" id="'
                         +response.signalements[0].channel_id+'">'
-                        +response.signalements[0].nombre_signalements+'</a></td><td><a href="#" data-toggle="modal" data-dismiss="modal" id="'
+                        +response.signalements[0].nombre_signalements+'</a></td><td><a href="#bannirModal" data-toggle="modal" data-dismiss="modal" id="'
                         +response.signalements[0].channel_id+'" class="far fa-trash-alt fa-2x"></a><a href="#myedit" data-toggle="modal" data-dismiss="modal" class="fa-2x far fa-edit" id="'
                         +response.signalements[0].channel_id+'"></a></td></tr>';
                         
@@ -233,22 +242,11 @@ String.prototype.rtrim = function() {
 
                 $('.fa-trash-alt').on("click", function(){ // TODO supprression
                     
-                    let signalId = $(this).attr("id");
+                        var signalId = $(this).attr("id");
 
-                    $.ajax({
-                        type: "DELETE",
-                        url: 'https://webradio-stream.herokuapp.com/authorized/signalement/update/'+signalId,
-                        headers: {
-                            'Authorization':'Bearer ' + token
-                        },
-                    }).done( (data) =>{
-
-                        console.log(data);
-
-                    }).fail( (err) =>{
-
-                        console.log(err);
-                    })
+                        localStorage.signalId = signalId;
+                        
+                        console.log (signalId);
 
                 });// delete
 
@@ -260,6 +258,34 @@ String.prototype.rtrim = function() {
 
             console.log(error);
         });
+
+        $('#deleteSignal').on("click", function(){
+
+            var signalId = localStorage.signalId;
+
+            $.ajax({
+            type: "DELETE",
+            url: 'https://webradio-stream.herokuapp.com/authorized/signalement/update/'+signalId,
+            headers: {
+                'Authorization':'Bearer ' + token
+            },
+            }).done( (data) =>{
+
+                
+                localStorage.removeItem("signalId");
+
+                $('#messageSucces').html(response.message);
+                $('#messageSucces').html("Ok Signal");
+                $('#messageSucces').css("display","block");
+                //console.log(data);
+
+            }).fail( (err) =>{
+
+                console.log(err);
+            });
+
+        });
+
     } // end if
 });
 

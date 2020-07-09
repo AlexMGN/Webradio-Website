@@ -58,11 +58,11 @@ $(document).ready(function() {
     let downloadUrl;
 
     
-    const token = localStorage.getItem("token");
-    let idChannel = localStorage.getItem("userChannelId");
+    const token = localStorage.token;
+    let idChannel = localStorage.userChannelId;
 
 
-    if(token !== "" || idChannel !=="") {
+    if(token != null && idChannel != null) {
 
         /*
         * affiche une chaine 
@@ -227,8 +227,8 @@ $(document).ready(function() {
 
                 let channelName = inputUsername(channels,inputChannel);
 
-             if(token !== "" || channelName !== undefined || idChannel !==""){
-                        
+             if(localStorage.token != null && localStorage.userChannelId != null && channelName !== undefined){
+                         
                  
                 $.ajax({
                     type: "PUT", 

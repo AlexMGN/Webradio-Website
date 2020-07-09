@@ -35,14 +35,14 @@ $(document).ready(function() {
 
     let store = true;
     
-    const token      =  localStorage.getItem("token");
-    let userId       =  localStorage.getItem("userId");
-    let channelId    =  localStorage.getItem("channelId");
-    let username     =  localStorage.getItem("username");
-    let userAvatar   =  localStorage.getItem("avatar");
-    let userPassword =  localStorage.getItem("password");
-    let channelName = localStorage.getItem("channel_name");
-    let channelAvatar = localStorage.getItem("channel_avatar");
+    const token      =  localStorage.token;
+    let userId       =  localStorage.userId;
+    let channelId    =  localStorage.channelId;
+    let username     =  localStorage.username;
+    let userAvatar   =  localStorage.avatar;
+    let userPassword =  localStorage.password;
+    let channelName = localStorage.channel_name;
+    let channelAvatar = localStorage.channel_avatar;
 
     $('#channels').attr('value', channelName);
     $('#profil').attr('src', channelAvatar);
@@ -89,7 +89,7 @@ $(document).ready(function() {
             });
         }); // camera
 
-        if(token !== "") {
+        if(token !=null) {
 
             //user show 
 
@@ -104,12 +104,13 @@ $(document).ready(function() {
                 if(response != undefined)
                 {
 
-                    localStorage.setItem("username", response.user[0].username);
-                    localStorage.setItem("avatar", response.user[0].avatar);
-                    localStorage.setItem("password", response.user[0].password);
-                    
+                    localStorage.username = response.user[0].username;
+                    localStorage.avatar = response.user[0].avatar;
+                    localStorage.password = response.user[0].password;
+                    userAvatar   =  localStorage.avatar;
                     $('#username').attr('value', response.user[0].username);
-                    $('#profil').attr('src', response.user[0].avatar);
+                    $('#profil').attr('src', userAvatar);
+                    $('#logo-setting').attr('src', userAvatar);
                     $('#password').attr('value', response.user[0].password);
                 }
                 console.log(response);
@@ -141,9 +142,12 @@ $(document).ready(function() {
                     username: usernameShow,
                 },
             }).done((response) =>{
-
-                $('#mycompte').html(response.message);
-                $('#mycompte').css("display","block");
+                
+                if(response != undefined){
+                        
+                    $('#mycompte').css("display","block");
+                    $('#mycompte').html(response.message);
+                }
 
                 console.log(response);
                  reset();
@@ -284,6 +288,26 @@ $(document).ready(function() {
                     console.log(err);
                 });
         });// fin password
+
+        $('#remove-account').click((e)=>{
+            e.preventDefault(); 
+            disable();
+
+            $.ajax({
+                type:'DELETE',
+                url:'https://webradio-stream.herokuapp.com/authorized/users/set/inactive/'+userId,
+                headers: {
+                    'Authorization':'Bearer ' + token
+                },
+            }).done((response) =>{
+                reset();
+                console.log(response);
+
+            }).fail((err) =>{
+                reset();
+                console.log(err);
+            });
+        }); // fin delete
         
 });
 

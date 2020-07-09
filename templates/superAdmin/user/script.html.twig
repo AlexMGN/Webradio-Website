@@ -128,7 +128,7 @@ $(document).ready(function() {
     const token = localStorage.getItem("token");
     let idUser;
 
-    if(token !== ""){ 
+    if(token.length > 0){ 
 
         //recherche
         $("#myInput").on("keyup", function() {
@@ -222,6 +222,9 @@ $(document).ready(function() {
   
 
     }// fin if
+    else {
+        $("#users-corps").html("Données non disponble");
+    }
 
 
 

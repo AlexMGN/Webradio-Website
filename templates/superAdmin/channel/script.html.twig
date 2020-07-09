@@ -17,7 +17,7 @@
 $.fn.pageMe = function(opts){
     var $this = this,
         defaults = {
-            perPage: 7,
+            perPage: 4,
             showPrevNext: false,
             numbersPerPage: 5,
             hidePageNumbers: false
@@ -130,11 +130,19 @@ $.fn.pageMe = function(opts){
 
 $(document).ready(function() {
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.token;
     let IdChannel;
 
-    if(token !== ""){
+    if(token != null){
 
+        //recherche
+        $("#search").on("keyup", function() {
+            let value = $(this).val().toLowerCase();
+
+            $("#channels-corps tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
 
         $.ajax({
             type: "GET",
@@ -166,7 +174,7 @@ $(document).ready(function() {
 
                         let myId = $(this).attr("id");
 
-                       localStorage.setItem("userChannelId", myId);
+                       localStorage.userChannelId = myId;
 
 
                         console.log(myId);
@@ -178,7 +186,7 @@ $(document).ready(function() {
 
                         let deleteId = $(this).attr("id");
 
-                       localStorage.setItem("deleteChannelId", deleteId);
+                       localStorage.deleteChannelId = deleteId;
 
                         window.onload = load;
                         console.log(deleteId);
@@ -196,31 +204,37 @@ $(document).ready(function() {
         */
         $('#deleteChannel').on("click", function(){
 
-            let channelIdelete = localStorage.getItem("deleteChannelId");
+            let channelIdelete = localStorage.deleteChannelId;
 
-              $.ajax({
+            if(channelIdelete != null) {
+                
+                $.ajax({
                 type: "PUT", 
                 url: "https://webradio-stream.herokuapp.com/authorized/channels/banish/"+channelIdelete, 
                 headers: {
                     'Authorization':'Bearer ' + token
                 }
-            }).done((response)=>{
+                }).done((response)=>{
 
-                localStorage.removeItem("deleteChannelId");
+                    localStorage.removeItem("deleteChannelId");
 
-                $('#messageSucces').html(response.message);
-                $('#messageSucces').css("display","block");
-                console.log(response.message);
+                    $('#messageSucces').html(response.message);
+                    $('#messageSucces').css("display","block");
+                    console.log(response.message);
 
-            }).fail((error)=>{
+                }).fail((error)=>{
 
-                console.log(error);
+                    console.log(error);
 
-            });
+                });
+            } //
 
         });// fin delete
 
     }// fin if
+    else {
+        $("#channels-corps").html("Données non disponble");
+    }
 
 
 

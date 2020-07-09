@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Unirest;
+
 
 class SecurityController extends AbstractController
 {
@@ -15,9 +13,9 @@ class SecurityController extends AbstractController
     /**
      * @Route("", name="app.login", methods={"GET"})
      */
-    public function login(Request $request)
+    public function login()
     {
-        return $this->render('page/home.html.twig');
+       return $this->render('page/home.html.twig');
     }
 
 

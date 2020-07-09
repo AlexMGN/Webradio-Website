@@ -48,4 +48,20 @@ class HomeController extends BaseController {
             
     }
 
+      /**
+     * @Route("/passwordLost", name="passwordLost.index")
+     */
+     public function passwordLost(): Response 
+     {        
+         return $this->render('forgotPassword/base.html.twig');
+     }
+
+     /**
+     * @Route("/confirm-password", name="confirmPassword.index")
+     */
+     public function corfimPassword(): Response 
+     {        
+         return $this->render('newPassword/confirm.html.twig');
+     }
+
 }

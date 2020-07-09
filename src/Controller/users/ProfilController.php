@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 
     /**
-     * @Route("/profile")
+     * @Route("/users-homepage")
      */
 class ProfilController extends BaseController
 {
   
      /**
-     * @Route("/{username}", name="profile.index", methods={"GET"})
+     * @Route("/", name="profile.index", methods={"GET"})
      */
     public function index() :Response
     {

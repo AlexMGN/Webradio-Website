@@ -37,8 +37,8 @@ String.prototype.rtrim = function() {
 }//  verify username
 
 
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("idForUser");
+    const token = localStorage.token;
+    const userId = localStorage.idForUser;
 
     const reset = () => {
         $(".btn_submit").attr("disabled", false);
@@ -55,7 +55,7 @@ String.prototype.rtrim = function() {
     *recuperer l'utilisateur 
     */
 
-    if(token !== ""){
+    if(token != null){
 
         $.ajax({
                 type: "GET", 
@@ -68,6 +68,7 @@ String.prototype.rtrim = function() {
                 if(response != undefined)
                 {
                     $('#username').attr('value', response.user[0].username);
+                    $('#profil').attr('src', response.user[0].avatar);
                 }
                 console.log(response);
 
