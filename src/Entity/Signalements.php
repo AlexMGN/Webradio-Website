@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SignalementsRepository")
  * Signalements
  *
  * @ORM\Table(name="signalements")
@@ -14,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Signalements
 {
     /**
-     * 
      * @var int
      *
      * @ORM\Column(name="signalement_id", type="integer", nullable=false)
@@ -142,24 +140,13 @@ class Signalements
         return $this->dateStream;
     }
 
-    public function setDateStream(\DateTimeInterface $dateStream): self
-    {
-        $this->dateStream = $dateStream;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
+    
 
 
 }

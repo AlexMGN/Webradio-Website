@@ -55,7 +55,20 @@
                                             </tr>
                                         </thead>
                                         <tbody id='users-corps'>
-                                            
+                                           {% for user in users %}
+                                                <tr>
+                                                    <td><img class="rounded-circle" style="font-size:2em; width:31px; height:32px;" src="{{ user.avatar }}" id="profil"></td>
+                                                    <td>{{ user.username }}</td>
+                                                    <td>{{ user.email }}</td>
+                                                    <td>{{ user.username }}</td>
+                                                    <td>{{ user.status}}</td>
+                                                    <td>
+                                                        <a href="#bannirModal" data-toggle="modal" data-dismiss="modal" id="{{ user.userId }}" class="far fa-trash-alt fa-2x"></a>
+                                                        <a href="/superadmin/users/edit/{{ user.userId }}" class="fa-2x far fa-edit" id="{{ user.userId }}" ></a>
+                                                    </td>
+                                                </tr>
+                                                {% include 'superAdmin/user/removeUser/modal.html.twig' %}
+                                           {% endfor %} 
                                                 
                                         </tbody>
                                     </table>
@@ -91,7 +104,7 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-{% include 'superAdmin/user/removeUser/modal.html.twig' %}
+
 
 </body>
 

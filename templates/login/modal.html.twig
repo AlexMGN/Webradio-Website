@@ -7,23 +7,27 @@
            </div>
            <div class="row">
                 <div class="col-sm-12">
-                        <form method="post">
+                        <form method="post" action="{{ path('app.login') }}">
+                            {% if error is defined %}
+                              <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
                                  <div class="alert alert-danger" style="display:none;font-size: 0.7rem;" id="login-alert"></div>
                                  <div class="alert alert-success" style="display:none;font-size: 0.7rem;" id="login-success"></div>
                             <div class="form-group champ">
-                                 <input type="email" id="login_email" class="form-control" name="_username" placeholder="Email">
+                                 <input type="email" id="login_email" class="form-control" name="_username" placeholder="Email" value=" {% if last_username is defined %} {{ last_username }} {% endif %}">
                             </div>
 
                             <div class="form-group champ">
                                  <input type="password" id="login_password" class="form-control" name="_password" placeholder="Mot de passe"> 
                             </div>
 
-                             <input type="hidden" name="api_token" id="api_token">
-
                             <div class="form-group champ">
                                 <button  id="login" type="submit" class="form-control border-0 font-weight-bold text-white btn_submit" style="background-color:#EF0051;">Connexion</button>
                             </div>
-                            <div class="fb-login-button" data-size="medium" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width="280" onlogin="checkLoginState();"></div>
+                            
+                            <div id="fb-root"></div>
+                            <!--<div class="fb-login-button" data-size="medium" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width="280" onlogin="checkLoginState();"></div>-->
+                            <div class="fb-login-button" data-size="medium" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="false" data-width="280"></div>
                         </form>
                         <div class="modal-footer">
                             <ul class="pl-0 d-flex flex-column w-100">
@@ -40,6 +44,7 @@
 {% block javascripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+
 <script type="text/javascript">
   window.fbAsyncInit = function() {
     FB.init({
@@ -50,7 +55,7 @@
     });
       
     FB.AppEvents.logPageView();   
-
+      
   };
 
   (function(d, s, id){
@@ -60,6 +65,10 @@
      js.src = "https://connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script >
+  
 
    
 function checkLoginState() {

@@ -51,7 +51,18 @@
                                             </tr>
                                         </thead>
                                     <tbody id="signal-corps">
-
+                                        {% for signal in signalements %}
+                                            <tr>
+                                               <td>{{ signal.channelName }} </td>
+                                               <td>{{ signal.urlStream }}</td>
+                                               <td>{{ signal.motif }}</td>
+                                               <td>
+                                                    <a href="#bannirModal" data-toggle="modal" data-dismiss="modal" id="{{ signal.channelId }}" class="far fa-trash-alt fa-2x"></a>
+                                                    <a href="#myedit" data-toggle="modal" data-dismiss="modal" class="fa-2x far fa-edit" id="{{ signal.channelId }}"></a>
+                                               </td>
+                                            <tr>
+                                              {% include 'admin/signalements/bannir.html.twig' %}
+                                            {% endfor %}
                                     
                                     </tbody>
                                     </table> 
@@ -66,9 +77,6 @@
                 </div>
             </div>
             <!-- /.container-fluid -->
-
-    {% include 'admin/signalements/bannir.html.twig' %}
-       
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">

@@ -42,14 +42,25 @@
                                     <table class="table table-bordered" id="signal-table" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Avatar</th>
                                                 <th>Nom de la chaîne</th>
-                                                <th>Status</th>
+                                                <th>Url du stream</th>
+                                                <th>Motif</th>
                                                 <th>Management</th>
                                             </tr>
                                         </thead>
                                         <tbody id="signal-corps">
-
+                                            {% for signal in signalements %}
+                                            <tr>
+                                               <td>{{ signal.channelName }} </td>
+                                               <td>{{ signal.urlStream }}</td>
+                                               <td>{{ signal.motif }}</td>
+                                               <td>
+                                                    <a href="#bannirModal" data-toggle="modal" data-dismiss="modal" id="{{ signal.channelId }}" class="far fa-trash-alt fa-2x"></a>
+                                                    <a href="#myedit" data-toggle="modal" data-dismiss="modal" class="fa-2x far fa-edit" id="{{ signal.channelId }}"></a>
+                                               </td>
+                                            <tr>
+                                              {% include 'superAdmin/signalements/bannir.html.twig' %}
+                                            {% endfor %}
                                     
                                         </tbody>
                                     </table> 
@@ -65,7 +76,7 @@
             </div>
             <!-- /.container-fluid -->
 
-        {% include 'superAdmin/signalements/bannir.html.twig' %}
+      
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">

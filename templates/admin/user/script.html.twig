@@ -142,7 +142,9 @@ $(document).ready(function() {
             });
         });
 
-
+        /*
+        * la liste d'utilisateur
+        */
         $.ajax({
             type: "GET", 
             url: 'https://webradio-stream.herokuapp.com/authorized/users', 
@@ -168,34 +170,38 @@ $(document).ready(function() {
                     +response.users[i].user_id+'"></a></td></tr>';
                 }
                 
-                    $("#users-corps").append(mytab);
+                    //$("#users-corps").append(mytab);
                      $("#users-corps").pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:5});
 
-                    $('.fa-edit').on("click", function(){
-
-                        let myId = $(this).attr("id");
-
-                       localStorage.idForUser = myId;
-
-                        console.log(myId);
-
-                    });
-
-                    $('.fa-trash-alt').on("click", function(){
-
-                        let deleteId = $(this).attr("id");
-
-                       localStorage.setItem("deleteUserId", deleteId);
-
-                        console.log(deleteId); 
-
-                    });// fin bannir
+                    
             }
             console.log(response);
 
         }).fail((error)=>{
             console.log(error);
         });
+
+        // edition d'un compte utilisateur 
+            $('.fa-edit').on("click", function(){
+
+                let myId = $(this).attr("id");
+
+                localStorage.idForUser = myId;
+
+                console.log(myId);
+
+            });
+            
+            // recupperation de l'id utilisation
+            $('.fa-trash-alt').on("click", function(){
+
+                let deleteId = $(this).attr("id");
+
+                localStorage.setItem("deleteUserId", deleteId);
+
+                console.log(deleteId); 
+
+            });// fin bannir
 
         /*
         *Suppression d'utilisateur
@@ -226,10 +232,7 @@ $(document).ready(function() {
   
 
     }// fin if
-
-
-
-
+  
 });
 </script>
 

@@ -17,7 +17,8 @@ class BannishController extends BaseController {
     */
     public function index() :Response
     {
-        return $this->render("banni/base.html.twig");    
+        
+        return $this->render("banni/pageBanni/pagebanni.html.twig");    
     }
 
      /**
@@ -25,18 +26,12 @@ class BannishController extends BaseController {
     */
     public function setting() :Response
     {
+        
         return $this->render("banni/settings/base.html.twig"); 
     }
 
-     /**
-    * @Route("/page", name="banni.page", methods={"GET"})
-    */
-    public function pageBanni() :Response
-    {
-        return $this->render("banni/pageBanni/pagebanni.html.twig"); 
-    }
 
-     /**
+    /**
     * @Route("/radios", name="banni.radios", methods={"GET"})
     */
     public function pageRadio() :Response

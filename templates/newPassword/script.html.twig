@@ -8,8 +8,19 @@
 <script>
 $(document).ready(function() {
 
-      String.prototype.rtrim = function() {
+    String.prototype.rtrim = function() {
     return this.replace(/\s+$/, "");
+    }
+
+    const reset = () => {
+        $(".btn_submit").attr("disabled", false);
+        $(".btn_submit").css("background-color", "#EF0051");
+        $(".btn_submit").hover(() => { $(".btn_submit").css("background-color", "#D31052") })
+    };
+
+    const disable = () => {
+        $(".btn_submit").attr("disabled", true);
+        $(".btn_submit").css("background-color", "gray");
     }
 
     function inputPassword(inputData, input){
@@ -24,37 +35,47 @@ $(document).ready(function() {
         }
     } // password verify
 
-    $('#password_new_form').on('click', (e) =>{
+     //let url1 = $(location).attr('href');
+     let url2 = $(location).attr('pathname');
+     let params = url2.split("/reset/");
+     let token = params[1];
+
+    $('#new_pass_submit').on('click', (e) =>{  
         e.preventDefault(); 
         disable();
 
         let newPass = $('#new_password').val();
         let inputPass = $('#new_password');
 
-        let newPassword = inputEmail(newPass, inputPass);
+        let newPassword = inputPassword(newPass, inputPass);
 
         console.log(newPassword);
 
-        if(newPassword != undefined) {
+        if(newPassword != undefined && token != null) {
 
              $.ajax({
             type: "POST",
-            url:"",
+            url:"https://webradio-stream.herokuapp.com/auth/reset/password/"+token,
+            headers: {
+                'Authorization':'Bearer ' + token
+            },
             data: {
                 password: newPassword,
             }
             }).done(function (response){
+                reset();
 
                 if(response != undefined) {
                    $('#mypassword').css('display', 'block');
+                   $("#mypassword").html(response);
                 }
                 console.log(response);
 
             }).fail((err) =>{
-
-                /*$('#passwordLost-danger').css("display", "block");
+                reset();
+                $('#passwordLost-danger').css("display", "block");
                 
-                $('#passwordLost-danger').html(err);*/
+                $('#passwordLost-danger').html("Service non trouvable");
 
                 console.log(err);
             });

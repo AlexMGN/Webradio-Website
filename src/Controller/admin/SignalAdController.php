@@ -4,16 +4,20 @@ namespace App\Controller\admin;
 
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Unirest;
-
+use App\Repository\SignalementsRepository;
 
 /**
 * @Route("/admin/signalement")
 */
 class SignalAdController extends BaseController 
 {
+    private $signalSuperArepository;
+
+    public function __construct(SignalementsRepository $signalSuperArepository)
+    {
+        $this->signalSuperArepository = $signalSuperArepository;
+    }
+    
     /**
      * @Route("/", name="admin.signal.index")
      *
@@ -21,7 +25,10 @@ class SignalAdController extends BaseController
      */
     public function index()
     {
-        return $this->render('admin/signalements/base.html.twig');
+        
+        return $this->render('admin/signalements/base.html.twig', [
+            'signalements' => $this->signalSuperArepository->findAll()
+        ]);
     }
 
     public function edit()

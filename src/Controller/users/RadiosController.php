@@ -4,10 +4,7 @@ namespace App\Controller\users;
 
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
-use App\Repository\UsersRepository;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Unirest;
+
 
     /**
      * @Route("/radios")

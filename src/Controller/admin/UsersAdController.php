@@ -4,9 +4,6 @@ namespace App\Controller\admin;
 
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Unirest;
 
 /**
 * @Route("/admin/users")
@@ -18,6 +15,7 @@ class UsersAdController extends BaseController
     */
     public function index()
     {
+        
         return $this->render('admin/user/index.html.twig');
     }
        
@@ -26,6 +24,7 @@ class UsersAdController extends BaseController
     */
     public function new()
     {
+        
         return $this->render('admin/user/new/new.html.twig');
     }
 

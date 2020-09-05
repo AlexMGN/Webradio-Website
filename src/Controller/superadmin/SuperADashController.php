@@ -4,9 +4,7 @@ namespace App\Controller\superadmin;
 
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Unirest;
+
 
     /**
      * @Route("/superadmin")
@@ -19,6 +17,7 @@ class SuperADashController extends BaseController
      */
     public function index() 
     {
+        
         return $this->render('superAdmin/base.html.twig');
     }
 
@@ -28,6 +27,7 @@ class SuperADashController extends BaseController
      */
     public function settings()
     {
+        
         return $this->render("superAdmin/settings/base.html.twig"); 
     }
 
@@ -37,6 +37,7 @@ class SuperADashController extends BaseController
 
      public function notification()
      {
+        
         return $this->render("superAdmin/notifications/base.html.twig");
      }
 

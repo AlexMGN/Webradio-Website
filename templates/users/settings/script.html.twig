@@ -258,7 +258,7 @@ $(document).ready(function() {
     });// end firebase
 
 
-   
+   if(token !=null && userId !=null){
         //update password
         $("#savePassword").click((e) => {
             e.preventDefault(); 
@@ -288,7 +288,6 @@ $(document).ready(function() {
                     console.log(err);
                 });
         });// fin password
-
         $('#remove-account').click((e)=>{
             e.preventDefault(); 
             disable();
@@ -300,14 +299,16 @@ $(document).ready(function() {
                     'Authorization':'Bearer ' + token
                 },
             }).done((response) =>{
-                reset();
+                
                 console.log(response);
 
             }).fail((err) =>{
-                reset();
                 console.log(err);
             });
         }); // fin delete
+        
+   }// fin if
+       
         
 });
 

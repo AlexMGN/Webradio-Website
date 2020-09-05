@@ -16,6 +16,7 @@ class LibraryMusicController extends BaseController{
      */
     public function index() :Response
     {
+
         return $this->render("users/musicLibrary/base.html.twig");
     }
 }

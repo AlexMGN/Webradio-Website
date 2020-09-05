@@ -3,17 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Serializable;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  * Users
  *
  * @ORM\Table(name="users")
  * @ORM\Entity
  */
-class Users implements UserInterface, Serializable
+class Users
 {
     /**
      * @var int
@@ -102,11 +99,18 @@ class Users implements UserInterface, Serializable
     private $channelId;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="stripe_id", type="string", length=255, nullable=false)
+     * @ORM\Column(name="stripe_id", type="string", length=255, nullable=true)
      */
     private $stripeId;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="confirmed", type="boolean", nullable=false)
+     */
+    private $confirmed;
 
     /**
      * @var \DateTime
@@ -114,78 +118,6 @@ class Users implements UserInterface, Serializable
      * @ORM\Column(name="created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $createdAt = 'CURRENT_TIMESTAMP';
-
-    /**
-     * Returns the roles granted to the user.
-     *
-     *     public function getRoles()
-     *     {
-     *         return ['ROLE_USER'];
-     *     }
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return string[] The user roles
-     */
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
-    /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
-     *
-     * @return string|null The salt
-     */
-    public function getSalt()
-    {
-        return null;
-    }
-
-    /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
-     */
-    public function eraseCredentials(){}
-
-    /**
-     * Returns the username used to authenticate the user.
-     *
-     * @return string The username
-     */
-    public function getUsername(){}
-
-    public function serialize()
-    {
-        return serialize([
-            $this->userId,
-            $this->email,
-            $this->username,
-            $this->password 
-        ]);
-    }
-
-    /**
-     * @param string $serialized
-     * 
-     * @return void
-     */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->userId,
-            $this->email,
-            $this->username,
-            $this->password
-        ) = unserialize($serialized, ['allowed_classes' => false]);
-
-    }
 
     public function getUserId(): ?int
     {
@@ -226,6 +158,11 @@ class Users implements UserInterface, Serializable
         $this->email = $email;
 
         return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
     }
 
     public function setUsername(string $username): self
@@ -324,9 +261,21 @@ class Users implements UserInterface, Serializable
         return $this->stripeId;
     }
 
-    public function setStripeId(string $stripeId): self
+    public function setStripeId(?string $stripeId): self
     {
         $this->stripeId = $stripeId;
+
+        return $this;
+    }
+
+    public function getConfirmed(): ?bool
+    {
+        return $this->confirmed;
+    }
+
+    public function setConfirmed(bool $confirmed): self
+    {
+        $this->confirmed = $confirmed;
 
         return $this;
     }

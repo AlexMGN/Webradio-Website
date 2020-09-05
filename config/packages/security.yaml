@@ -11,11 +11,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main: 
-            anonymous: ~
-            json_login:
-                check_path: app.login
-                username_path: security.credentials.username
-                password_path: security.credentials.password
+            anonymous: lazy                
+            guard:
+                authenticators:
+                   - App\Security\MyFacebookAuthenticator
+            #anonymous: ~
+            #json_login:
+            #    check_path: app.login
+            #    username_path: security.credentials.username
+            #    password_path: security.credentials.password
                 
             logout:
                 path: /logout
@@ -32,9 +36,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/superadmin, roles: ROLE_SUPER_ADMIN  }
+        - { path: ^/superadmin, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER  }
+        - { path: ^/users-homepage, roles: ROLE_USER }
     
     role_hierarchy:
         ROLE_USER: ROLE_USER

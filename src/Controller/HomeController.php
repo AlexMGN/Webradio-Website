@@ -11,19 +11,25 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
-    /**
-     * @Route("/")
-     */
+    
 class HomeController extends BaseController {
 
 
 
     /**
-     * @Route("/", name="home.index")
+     * @Route("/", name="home.index", methods={"GET"})
      */
     public function index(): Response 
     {        
         return $this->render('pages/home.html.twig');
+    }
+
+    /**
+     * @Route("/page-erreur", name="page.404", methods={"GET"})
+     */
+    public function pageErreur () 
+    {
+        return $this->render('pages/page-404.html.twig');
     }
 
     /**
@@ -48,7 +54,7 @@ class HomeController extends BaseController {
             
     }
 
-      /**
+    /**
      * @Route("/passwordLost", name="passwordLost.index")
      */
      public function passwordLost(): Response 
@@ -57,7 +63,8 @@ class HomeController extends BaseController {
      }
 
      /**
-     * @Route("/confirm-password", name="confirmPassword.index")
+     * @Route("/reset/{token}", name="confirmPassword.index")
+     * 
      */
      public function corfimPassword(): Response 
      {        

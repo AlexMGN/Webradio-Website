@@ -2,9 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\ListSignals;
+
 use App\Entity\Signalements;
-use App\Entity\UserSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;

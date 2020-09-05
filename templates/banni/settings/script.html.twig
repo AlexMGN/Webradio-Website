@@ -89,7 +89,7 @@ $(document).ready(function() {
             });
         }); // camera
 
-        if(token !== "") {
+        if(token !== null) {
 
             //user show 
 
@@ -248,6 +248,7 @@ $(document).ready(function() {
 
 
         } // end if
+          
 
     }).fail( (err) =>{
         console.log(err.responseJSON.message)

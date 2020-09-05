@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
     /**
      * @Route("/users-homepage")
+     * 
      */
 class ProfilController extends BaseController
 {
@@ -21,7 +22,8 @@ class ProfilController extends BaseController
      */
     public function index() :Response
     {
-        return $this->render("users/base.html.twig");      
+       
+        return $this->render("users/base.html.twig");       
     }
 
    

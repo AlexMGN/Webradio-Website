@@ -134,6 +134,7 @@ function inputUsername(inputData,input){
          return usernameData;
            
     }
+     location.reload();
 }//  verify username
 
 function inputEmail(inputData, input){
@@ -142,6 +143,7 @@ function inputEmail(inputData, input){
     emailInput = input;
     if(emailData.length < 1) {
         emailInput.after('<div class="erreur text-dark small" style="font-size: xx-small;">Ce champ est obligatoire</div>');
+         location.reload();
     }else{
         let regEx = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]{0,63}@(?:[a-zA-Z0-9-]{1,63}\.){1,125}[a-zA-Z]{2,63}$/;
         let validEmail = regEx.test(emailData);
@@ -153,7 +155,10 @@ function inputEmail(inputData, input){
         else{
             return emailData;
         }
+         
     }
+
+     location.reload();
 
 }//  email verify
 
@@ -166,7 +171,10 @@ function inputPassword(inputData, input){
         
     }else  {
         return passwordData;
+        
     }
+
+     location.reload();
 } // password verify
    
 
@@ -357,6 +365,7 @@ function inputPassword(inputData, input){
 
                             }else{
 
+                                location.reload(true);
                                 setTimeout(function(){
 
                                     window.location.href = "/";
@@ -369,9 +378,11 @@ function inputPassword(inputData, input){
                     });
                         
                     
-                }else {
+                }// end if
+                else {
                     $('#login-alert').css("display", "block");
                     $('#login-alert').html("la connexion a echouée");
+                    $('#login-success').css("display", "none");
                 }
 
                 console.log(response);
@@ -381,10 +392,12 @@ function inputPassword(inputData, input){
                 reset();
 
                 $('#login-alert').css("display", "block");
-                $('#login-alert').html(err.responseJSON.message.message);
+                $('#login-alert').html('Il semblerait que vous n\'existez pas chez nous. Merci de vous inscrire !');
+                $('#login-success').css("display", "none");
+            
 
-                console.log(err);
-
+                console.log(err.responseJSON);
+                location.reload();
             });
 
         }

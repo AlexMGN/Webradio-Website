@@ -20,7 +20,7 @@ class PlanningController extends BaseController{
     }
 
      /**
-     * @Route("/timeline", name="profile.timeline.index")
+     * @Route("/timeline", name="profile.timeline.index", methods={"GET"})
      */
     public function timeline (): Response {
 

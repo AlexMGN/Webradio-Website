@@ -17,7 +17,11 @@
  console.log("je suis dans planif")
 
 $(document).ready(function() {
-    
+
+    // Show the Modal on load
+  //$("#planningModal").modal("show");
+    $('#planningModal').modal({backdrop: 'static', keyboard: false}) 
+
     $('.cld-number').click(function(){
         window.location.href = "/user/planning/timeline";
     }); 

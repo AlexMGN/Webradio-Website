@@ -19,7 +19,8 @@
                                     <h5 class="mb-4 text-black mt-auto">Veuillez saisir votre nouveau Mot de passe.</h5>
                                 </div>
                                 
-                                <div class="text-center row col-xl-12 alert alert-success"  style="display: none;" id="mypassword" role="alert"><div>
+                                <div class="text-center row col-xl-12 alert alert-success"  style="display: none;" id="mypassword" role="alert"></div>
+                                <div class="text-center row col-xl-12 alert alert-danger"  style="display: none;" id="#passwordLost-danger" role="alert"></div>
 
                                 <form id="password_new_form">
                                     <div class="row col-sm form-group champ-password">
@@ -33,5 +34,6 @@
                         </div>
                     </div>
             </div>
+               {% include 'newPassword/script.html.twig' %}
     </body>
 </html>

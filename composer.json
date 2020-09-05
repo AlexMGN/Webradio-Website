@@ -6,8 +6,12 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "cocur/slugify": "^4.0",
+        "knplabs/knp-paginator-bundle": "^5.1",
+        "knpuniversity/oauth2-client-bundle": "^2.2",
         "laminas/laminas-code": "^3.4",
         "laminas/laminas-eventmanager": "^3.2",
+        "league/oauth2-facebook": "^2.0",
+        "mashape/unirest-php": "^3.0",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "5.0.*",
@@ -21,10 +25,9 @@
         "symfony/http-client": "5.0.*",
         "symfony/intl": "5.0.*",
         "symfony/mailer": "5.0.*",
-        "symfony/maker-bundle": "^1.19",
         "symfony/monolog-bundle": "^3.1",
         "symfony/notifier": "5.0.*",
-        "symfony/orm-pack": "*",
+        "symfony/orm-pack": "^2.0",
         "symfony/process": "5.0.*",
         "symfony/security-bundle": "5.0.*",
         "symfony/serializer-pack": "*",
@@ -40,6 +43,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "symfony/debug-pack": "*",
+        "symfony/maker-bundle": "^1.21",
         "symfony/profiler-pack": "^1.0",
         "symfony/test-pack": "*"
     },
@@ -80,7 +84,7 @@
             "@auto-scripts"
         ],
         "compile": [
-            "php bin/console doctrine:mapping:import 'App\\Entity' annotation --path=src/Entity"
+            "php bin/console cache:clear"
         ]
     },
     "conflict": {

@@ -190,65 +190,10 @@ String.prototype.rtrim = function() {
                        
                     //}
                     
-                    $("#signal-corps").append(mytab);  //const id = $(this).data("id")
+                   // $("#signal-corps").append(mytab);  //const id = $(this).data("id")
                     $("#signal-corps").pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:4});                    
 
-                    $('.fa-edit').on("click", function(){
-
-                        let signalId = $(this).attr("id");
-
-                       //localStorage.setItem("signalId", signalId);
-                       $('#editSignal').modal("show");
-
-                       $('#update_channel_signalements_id').attr('value', signalId);
-
-                       $('#update_channel_signalements_form').on("click", function(e){
-
-                           e.preventDefault(); 
-                            disable();
-                           const signalement_id = $("#update_channel_signalements_id").val();
-
-                                let usernameShow = $('#format-update').val();
-                                let inpUser = $('#format-update');
-                                let createUser = inputUsername(usernameShow,inpUser);
-                                
-                            let data = {
-                                motif: createUser
-                            };
-                          if (createUser !== undefined) {
-
-                           $.ajax({
-                               type: "PUT",
-                               url: 'https://webradio-stream.herokuapp.com/authorized/signalement/update/'+signalement_id,
-                               data: data,
-                               headers: {
-                                    'Authorization':'Bearer ' + token
-                                },
-                           }).done( (data) =>{
-
-                                console.log(data);
-
-                           }).fail( (err) =>{
-
-                               console.log(err);
-                           })
-                         }// end if
-
-                       });//end update
-
-                        console.log(signalId);
-
-                    });// fin edit
-
-                $('.fa-trash-alt').on("click", function(){ // TODO supprression
                     
-                        var signalId = $(this).attr("id");
-
-                        localStorage.signalId = signalId;
-                        
-                        console.log (signalId);
-
-                });// delete
 
 
             }
@@ -258,7 +203,66 @@ String.prototype.rtrim = function() {
 
             console.log(error);
         });
+        
+// edition du signalement
+        $('.fa-edit').on("click", function(){
 
+        let signalId = $(this).attr("id");
+
+        //localStorage.setItem("signalId", signalId);
+        $('#editSignal').modal("show");
+
+        $('#update_channel_signalements_id').attr('value', signalId);
+
+        $('#update_channel_signalements_form').on("click", function(e){
+
+            e.preventDefault(); 
+                disable();
+            const signalement_id = $("#update_channel_signalements_id").val();
+
+                    let usernameShow = $('#format-update').val();
+                    let inpUser = $('#format-update');
+                    let createUser = inputMotif(usernameShow,inpUser);
+                    
+                let data = {
+                    motif: createUser
+                };
+            if (createUser !== undefined) {
+
+            $.ajax({
+                type: "PUT",
+                url: 'https://webradio-stream.herokuapp.com/authorized/signalement/update/'+signalement_id,
+                data: data,
+                headers: {
+                        'Authorization':'Bearer ' + token
+                    },
+            }).done( (data) =>{
+
+                    console.log(data);
+
+            }).fail( (err) =>{
+
+                console.log(err);
+            })
+            }// end if
+
+        });//end update
+
+            console.log(signalId);
+
+        });// fin edit
+
+        // recuperation de l'id du signalement afin de supprimer
+        $('.fa-trash-alt').on("click", function(){ 
+                var signalId = $(this).attr("id");
+
+                localStorage.signalId = signalId;
+                
+                console.log (signalId);
+
+        });// delete
+
+//  suppression du signalement
         $('#deleteSignal').on("click", function(){
 
             var signalId = localStorage.signalId;
@@ -287,6 +291,7 @@ String.prototype.rtrim = function() {
         });
 
     } // end if
+    
 });
 
 

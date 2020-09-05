@@ -4,8 +4,6 @@ namespace App\Controller\admin;
 
 use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\BaseController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 
     /**
@@ -24,10 +22,11 @@ class AdDashController extends BaseController
 
     
     /**
-     * @Route("/setting", name="admin.setting.index")
+     * @Route("/setting", name="admin.setting.index", methods={"GET"})
      */
     public function settings()
     {
+        
         return $this->render("admin/settings/base.html.twig"); 
     }
 
